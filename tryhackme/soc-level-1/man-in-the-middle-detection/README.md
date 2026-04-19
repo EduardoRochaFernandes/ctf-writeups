@@ -6,43 +6,56 @@
 **Difficulty:** Easy
 **Type:** Walkthrough
 **Cost:** Premium
-**Status:** ⏳ Not yet completed
 **Room Link:** https://tryhackme.com/room/mitmdetection
 
 ---
 
 ## What is this room about?
 
-*This room has not been completed yet. This writeup will be filled in when the room is done.*
+Covers how MitM attacks work and how to detect them — ARP poisoning, DNS spoofing, and SSL stripping — using Wireshark and network log analysis.
 
 ---
 
-## Topics Covered
+## ARP Poisoning
 
-- *(to be added)*
+ARP has no authentication. Attacker sends unsolicited ARP replies claiming the gateway's IP belongs to their MAC. All traffic meant for the gateway goes to the attacker.
+
+**Detection indicators:**
+- Two different MACs claiming the same IP in ARP replies
+- High frequency of gratuitous (unsolicited) ARP responses targeting the gateway IP
+
+```
+# Wireshark filters
+arp.isgratuitous                    # Unsolicited ARP replies
+arp.duplicate-address-detected      # Two MACs claiming same IP
+```
+
+**Rule:** the gateway can only have one MAC. Any ARP message claiming otherwise is an attack or a misconfiguration.
 
 ---
 
-## Key Concepts
+## SSL Stripping
 
-- *(to be added)*
+Attacker sits between victim and server. Victim connection: HTTP port 80 (cleartext). Attacker to server: HTTPS port 443 (encrypted). Attacker reads all credentials in plaintext.
+
+**Detection:** HTTPS-only websites generating HTTP traffic. `tcp.port == 80` for a site that should only use 443.
 
 ---
 
-## Tools Used
+## DNS Spoofing
 
-| Tool | Purpose |
-|------|---------|
-| *(to be added)* | *(to be added)* |
+Attacker intercepts DNS queries and sends fake responses with a malicious IP.
+
+**Detection:** Two DNS responses to the same query from different source IPs — one legitimate resolver, one attacker.
 
 ---
 
 ## Key Takeaways
 
-> *(to be added after completing the room)*
+> ARP and DNS were designed without authentication — a design decision from the 1980s that attackers still exploit today. Detecting MitM requires establishing a baseline of what's normal on the network.
 
 ---
 
 ## References
 
-- [TryHackMe Room](https://tryhackme.com/room/mitmdetection)
+- [MITRE ATT&CK T1557 Adversary-in-the-Middle](https://attack.mitre.org/techniques/T1557/)

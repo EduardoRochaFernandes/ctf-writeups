@@ -6,43 +6,63 @@
 **Difficulty:** Easy
 **Type:** Walkthrough
 **Cost:** Free
-**Status:** ⏳ Not yet completed
 **Room Link:** https://tryhackme.com/room/windowsbasics
 
 ---
 
 ## What is this room about?
 
-*This room has not been completed yet. This writeup will be filled in when the room is done.*
+Practical introduction to navigating Windows — the file system, essential commands, key directories, and security-relevant locations.
 
 ---
 
-## Topics Covered
+## Security-Relevant Directories
 
-- *(to be added)*
+| Path | Why it matters |
+|------|---------------|
+| `C:\Windows\System32` | Core OS — executables here should be verified |
+| `C:\Temp` | Writable by all users — top malware drop zone |
+| `C:\Users\[user]\AppData` | Hidden by default — common persistence location |
+| `C:\Windows\System32\Tasks` | Scheduled task definitions |
+| `C:\Windows\Prefetch` | Recently executed programs — forensic evidence |
+| `C:\Windows\System32\winevt\Logs` | Windows Event Log files (.evtx) |
 
 ---
 
-## Key Concepts
+## Essential CMD Commands for Analysts
 
-- *(to be added)*
+```cmd
+ipconfig /all         Full network config + DNS
+netstat -ano          Active connections with PIDs
+tasklist /svc         Processes with services
+whoami /priv          Current user privileges
+net user              List local accounts
+net localgroup        List local groups
+dir /a /s C:\Temp     All files including hidden
+dir /r                Show Alternate Data Streams
+attrib [file]         File attributes (hidden, system)
+```
 
 ---
 
-## Tools Used
+## Key Differences: Windows vs Linux
 
-| Tool | Purpose |
-|------|---------|
-| *(to be added)* | *(to be added)* |
+| | Windows | Linux |
+|--|---------|-------|
+| Path separator | Backslash | Forward slash |
+| Case sensitivity | Insensitive | Sensitive |
+| Line endings | CRLF | LF |
+| Admin account | Administrator | root |
+| Config storage | Registry | Text files |
 
 ---
 
 ## Key Takeaways
 
-> *(to be added after completing the room)*
+> `C:\Temp` and `C:\Users\[user]\AppData\Local\Temp` are the two most common malware landing zones. Any new executable in these directories deserves immediate investigation.
 
 ---
 
 ## References
 
-- [TryHackMe Room](https://tryhackme.com/room/windowsbasics)
+- [Microsoft Windows Documentation](https://learn.microsoft.com/en-us/windows/)

@@ -6,43 +6,54 @@
 **Difficulty:** Easy
 **Type:** Walkthrough
 **Cost:** Free
-**Status:** ⏳ Not yet completed
 **Room Link:** https://tryhackme.com/room/webapplicationbasics
 
 ---
 
 ## What is this room about?
 
-*This room has not been completed yet. This writeup will be filled in when the room is done.*
+Foundational knowledge about how web applications work — the client-server model, URL anatomy, HTTP request/response structure, and security-relevant headers.
 
 ---
 
-## Topics Covered
+## URL Structure
 
-- *(to be added)*
+```
+https://shop.example.com:443/products?category=shoes#results
+scheme  domain              port path   query          fragment
+```
+
+The query string is the most common injection surface — SQL injection, XSS, and path traversal are frequently injected here.
 
 ---
 
-## Key Concepts
+## Client-Server Model
 
-- *(to be added)*
+1. Browser sends HTTP request to web server
+2. Web server forwards to application server
+3. Application server runs logic, queries database
+4. Response returned to browser
 
 ---
 
-## Tools Used
+## Security-Relevant Response Headers
 
-| Tool | Purpose |
-|------|---------|
-| *(to be added)* | *(to be added)* |
+| Header | Protection |
+|--------|-----------|
+| `Content-Security-Policy` | Restricts resource loading — mitigates XSS |
+| `X-Frame-Options` | Prevents clickjacking |
+| `Strict-Transport-Security` | Forces HTTPS — prevents SSL stripping |
+| `X-Content-Type-Options` | Prevents MIME type sniffing |
 
 ---
 
 ## Key Takeaways
 
-> *(to be added after completing the room)*
+> When you see `?id=1 UNION SELECT null,username,password FROM users--` in an access log, understanding URL structure lets you immediately recognise it as SQL injection injected into a query parameter.
 
 ---
 
 ## References
 
-- [TryHackMe Room](https://tryhackme.com/room/webapplicationbasics)
+- [MDN How the Web Works](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)

@@ -6,43 +6,70 @@
 **Difficulty:** Easy
 **Type:** Walkthrough
 **Cost:** Premium
-**Status:** ⏳ Not yet completed
 **Room Link:** https://tryhackme.com/room/windowsclibasics
 
 ---
 
 ## What is this room about?
 
-*This room has not been completed yet. This writeup will be filled in when the room is done.*
+Practical use of CMD and PowerShell for system investigation and incident response. Essential for both live analysis and forensic examination.
 
 ---
 
-## Topics Covered
+## CMD vs PowerShell
 
-- *(to be added)*
+| | CMD | PowerShell |
+|--|-----|-----------|
+| Output | Text | .NET objects (filterable/sortable) |
+| Event log access | Limited | Full (Get-WinEvent) |
+| Remoting | Limited | Native (PSSession, Invoke-Command) |
+| Malware abuse | Less common | Frequently abused |
 
 ---
 
-## Key Concepts
+## PowerShell for Analysts
 
-- *(to be added)*
+```powershell
+# Active network connections
+Get-NetTCPConnection | Where-Object State -eq "Established"
+
+# Failed logons last 24h
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625; StartTime=(Get-Date).AddDays(-1)}
+
+# Process creation
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4688}
+
+# Check persistence locations
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run"
+Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+
+# Scheduled tasks (persistence check)
+Get-ScheduledTask | Where-Object State -eq "Ready"
+
+# Local admins
+Get-LocalGroupMember -Group "Administrators"
+
+# Recent files created
+Get-ChildItem C:\Users -Recurse -File | Sort-Object LastWriteTime -Descending | Select-Object -First 20
+```
 
 ---
 
-## Tools Used
+## PowerShell Remoting
 
-| Tool | Purpose |
-|------|---------|
-| *(to be added)* | *(to be added)* |
+```powershell
+Enter-PSSession -ComputerName HOSTNAME -Credential domain\analyst
+Invoke-Command -ComputerName HOSTNAME -ScriptBlock { Get-NetTCPConnection | Where-Object State -eq "Established" }
+```
 
 ---
 
 ## Key Takeaways
 
-> *(to be added after completing the room)*
+> `netstat -ano` cross-referenced with `tasklist /svc` is one of the fastest ways to identify malware. Unknown process making outbound connections to external IPs = start investigating immediately.
 
 ---
 
 ## References
 
-- [TryHackMe Room](https://tryhackme.com/room/windowsclibasics)
+- [MITRE ATT&CK T1059.001 PowerShell](https://attack.mitre.org/techniques/T1059/001/)

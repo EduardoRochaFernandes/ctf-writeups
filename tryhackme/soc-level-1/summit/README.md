@@ -6,43 +6,58 @@
 **Difficulty:** Easy
 **Type:** Challenge
 **Cost:** Premium
-**Status:** ⏳ Not yet completed
 **Room Link:** https://tryhackme.com/room/thesummit
 
 ---
 
 ## What is this room about?
 
-*This room has not been completed yet. This writeup will be filled in when the room is done.*
+Interactive challenge putting the Pyramid of Pain into practice. You play a defender trying to prevent a simulated adversary from achieving their objective, applying defences at each pyramid level.
 
 ---
 
-## Topics Covered
+## The Challenge Progression
 
-- *(to be added)*
+Starting at hash blocking (bottom), you block indicators and watch the attacker adapt:
+
+1. Block malware hash -> attacker recompiles, new hash in minutes
+2. Block IP -> attacker switches C2 IPs
+3. Block domain -> attacker registers new domain
+4. Detect host artefacts -> attacker redesigns dropper
+5. Detect network artefacts -> attacker changes C2 framework
+6. Block tools -> attacker must acquire new tools
+7. Detect TTPs -> attacker gives up (too expensive to change methodology)
 
 ---
 
-## Key Concepts
+## The Cost Model
 
-- *(to be added)*
+This is the Pyramid of Pain made tangible. Each level you move up imposes exponentially higher cost on the attacker:
+- Hash change: minutes
+- IP change: seconds
+- Domain change: hours + registration cost
+- Tool replacement: days + money
+- TTP change: weeks + retraining the entire operation
 
 ---
 
-## Tools Used
+## Applying This in Practice
 
-| Tool | Purpose |
-|------|---------|
-| *(to be added)* | *(to be added)* |
+In a real SOC:
+- Hash/IP blocking: fast to implement, low durability
+- TTP-based Sigma rules mapped to ATT&CK: high effort, high durability, high attacker pain
+
+Both are needed. Hashes for speed, TTPs for resilience.
 
 ---
 
 ## Key Takeaways
 
-> *(to be added after completing the room)*
+> After this challenge I reviewed every detection rule in my SOC Home Lab. Rules that only detect a specific hash or IP are now labelled "fragile" and paired with a TTP-based rule that catches the same technique with any indicator.
 
 ---
 
 ## References
 
-- [TryHackMe Room](https://tryhackme.com/room/thesummit)
+- [Pyramid of Pain — David Bianco](http://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html)
+- [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/)
