@@ -1,0 +1,11 @@
+# Screenshots with sensitive info
+*.pcap
+*.pcapng
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp
