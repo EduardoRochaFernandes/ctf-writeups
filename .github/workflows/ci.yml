@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 1 * *" # monthly: catch dead external links
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Writeup checks and Python lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Redaction, metadata and index checks
+        run: python scripts/check_writeups.py
+      - name: Lint scripts (ruff)
+        run: |
+          pip install ruff
+          ruff check scripts
+
+  links:
+    name: Relative links (blocking)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --include-fragments '**/*.md'
+          fail: true
+
+  external:
+    name: External links and markdownlint (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-retries 2 --timeout 20 --accept 200,403,429 '**/*.md'
+          fail: false
+      - name: markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        continue-on-error: true
+        with:
+          globs: "**/*.md"
+          config: .markdownlint.json

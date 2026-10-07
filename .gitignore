@@ -1,24 +1,27 @@
-# Environment and credentials
+# Secrets
 .env
 *.env
 secrets/
 
-# OS
+# Captures and samples (may contain sensitive data / malware)
+*.pcap
+*.pcapng
+*.evtx
+*.eml
+*.exe
+*.zip
+
+# OS / editors
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Editors
-.vscode/settings.json
+.vscode/
 .idea/
 *.swp
 *~
-
-# PCAP files with sensitive data
-*.pcap
-*.pcapng
 
 # Python
 __pycache__/
 *.pyc
 .venv/
+.ruff_cache/
