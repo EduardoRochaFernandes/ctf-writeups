@@ -69,9 +69,3 @@ NetworkMiner is a Network Forensic Analysis Tool (NFAT) that automatically extra
 | Parameter processing | Limited | Better |
 
 Use v1.6 when needing frame details or consolidated cleartext. Use v2.7 for MAC correlation.
-
----
-
-## Placeholder
-
-Full notes and additional sections to be added upon room completion.

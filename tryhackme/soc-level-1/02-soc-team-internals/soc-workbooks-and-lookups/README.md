@@ -54,7 +54,7 @@ When an alert involves IP addresses and network traffic, a network diagram conve
 
 Without diagram context:
 ```
-External IP 103.61.240.174 connects to internal port 10443
+External IP 203.0.113.74 connects to internal port 10443
 Translated to 10.10.0.53
 10.10.0.53 scans 172.16.15.0/24
 ```

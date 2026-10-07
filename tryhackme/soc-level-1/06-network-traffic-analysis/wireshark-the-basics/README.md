@@ -99,12 +99,6 @@ Timestamp mismatch between local timezone and UTC is a consistent source of anal
 
 ---
 
-## Placeholder
-
-Full notes and additional sections to be added upon room completion.
-
----
-
 ## References
 
 - [Wireshark Display Filter Reference](https://www.wireshark.org/docs/dfref/)

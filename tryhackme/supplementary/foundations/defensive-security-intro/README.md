@@ -23,7 +23,7 @@ A broad introduction to defensive security: what it is, who does it, and what th
 
 **Malware types:** Virus (spreads by attaching to programs), Trojan Horse (appears legitimate, hides malicious function), Ransomware (encrypts files, demands payment for decryption key).
 
-**Practical SIEM exercise:** Analysed a suspicious login alert in a simulated SIEM at a fictional bank. Steps: identify source IP, check reputation via threat intelligence tool (confirmed malicious), escalate to SOC lead, block IP via firewall rule. Flag: `THM{THREAT-BLOCKED}`.
+**Practical SIEM exercise:** Analysed a suspicious login alert in a simulated SIEM at a fictional bank. Steps: identify source IP, check reputation via threat intelligence tool (confirmed malicious), escalate to SOC lead, block IP via firewall rule. Flag: `THM{REDACTED}`.
 
 ---
 
